@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
     zip
 
 # Install Composer
-COPY --from=public.ecr.aws/composer/composer:latest-bin /usr/bin/composer /usr/bin/composer
+COPY --from=public.ecr.aws/composer/composer:latest-bin /composer /usr/bin/composer
 
 # Create a system user for running Composer and Artisan commands
 RUN mkdir -p /home/$user/.composer && \
