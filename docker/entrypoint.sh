@@ -3,6 +3,9 @@
 # Start Nginx service
 service nginx start
 
+# Generate Key
+php artisan key:generate
+
 # Run Laravel migrations
 php artisan migrate --force
 
@@ -15,4 +18,3 @@ php artisan optimize
 
 # Start PHP-FPM
 php-fpm
-
