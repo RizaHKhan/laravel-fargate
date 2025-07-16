@@ -50,7 +50,7 @@ COPY --chown=www-data:www-data . /var/www
 # Install PHP dependencies
 RUN composer install --no-progress --optimize-autoloader --no-dev
 
-RUN mkdir -p /var/www/.npm && chown -R www-data:www-data /var/www/.npm
+RUN chown -R www-data:www-data /var/www
 
 # Run npm as www-data
 RUN su www-data -s /bin/sh -c "npm ci && npm run build"
