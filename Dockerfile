@@ -46,6 +46,8 @@ COPY --chown=www-data:www-data . /var/www
 # Install PHP dependencies
 RUN composer install
 
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
 # Expose port 80
 EXPOSE 80
 
