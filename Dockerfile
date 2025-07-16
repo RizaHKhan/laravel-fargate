@@ -43,22 +43,21 @@ COPY ./docker/entrypoint.sh /etc/entrypoint.sh
 RUN chmod +x /etc/entrypoint.sh
 
 # Set the working directory
-WORKDIR /var/www
+WORKDIR /app
 
-COPY --chown=www-data:www-data . /var/www
+COPY composer.json composer.lock package.json package-lock.json ./
 
-# Install PHP dependencies
-RUN composer install --no-progress --optimize-autoloader --no-dev
+COPY . .
 
-RUN chown -R www-data:www-data /var/www
+RUN composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader --no-dev \
+    && npm ci --no-audit --no-fund --production --unsafe-perm \
+    && npm run build
 
-# Run npm as www-data
-RUN su www-data -s /bin/sh -c "npm ci && npm run build"
+RUN mkdir -p /app/database \
+    && touch /app/database/database.sqlite \
+    && chown -R www-data:www-data /app/database \
+    && chmod -R 775 /app/database
 
-RUN chown -R www-data:www-data /var/www/storage /var/www/public && \
-    chmod -R 775 /var/www/storage
-
-# Expose port 80
 EXPOSE 80
 
 # Define the entrypoint
