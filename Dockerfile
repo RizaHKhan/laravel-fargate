@@ -44,9 +44,8 @@ WORKDIR /var/www
 COPY --chown=www-data:www-data . /var/www
 
 # Install PHP dependencies
-RUN composer install
-
-RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+RUN composer install --no-progress --optimize-autoloader --no-dev \
+    && chmod -R 777 storage
 
 # Expose port 80
 EXPOSE 80
