@@ -29,5 +29,5 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build -t laravel-app:latest .
-          docker tag larvel-app:latest 713287342529.dkr.ecr.us-east-1.amazonaws.com/laravel-app:latest
+          docker tag laravel-app:latest 713287342529.dkr.ecr.us-east-1.amazonaws.com/laravel-app:latest
           docker push 713287342529.dkr.ecr.us-east-1.amazonaws.com/laravel-app:latest
